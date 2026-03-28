@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
 
   // ── Button inside the image ──────────────────────
   insideBtn: {
-    backgroundColor: 'rgba(237, 44, 30, 0.66)',
+    backgroundColor: '#3D5580',
     borderWidth: 1.5,
     borderColor: 'rgba(255,255,255,0.55)',
     borderRadius: 50,
