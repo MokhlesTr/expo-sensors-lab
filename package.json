@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "expo-sensors",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,9 @@
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "typescript": "^6.0.2"
+  }
 }
