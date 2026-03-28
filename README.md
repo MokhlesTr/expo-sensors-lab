@@ -8,26 +8,29 @@
 
 | Gyroscope Visualiser | Friction Gallery |
 |---|---|
-| ![Gyroscope screen](./my-app/assets/image.png) | ![Friction gallery screen](./my-app/assets/image2.png) |
+| <img src="./assets/image.png" width="250" alt="Gyroscope screen" /> | <img src="./assets/image2.png" width="250" alt="Friction gallery screen" /> |
 
 ---
 
 ## ✨ Features
 
 ### 🔵 Gyroscope Screen
-- **Real-time ring visualiser** — three concentric rings (outer, mid, inner) each shift with a different *friction multiplier*, simulating depth-of-field parallax
+
+- **Real-time ring visualiser** — three concentric rings (outer, mid, inner) each shift with a different _friction multiplier_, simulating depth-of-field parallax
 - **Rotation** — the Z-axis angular velocity spins all rings simultaneously
 - **Live axis cards** — X (Roll), Y (Pitch), Z (Yaw) shown in rad/s with colour-coded labels
 - **Magnitude bar** — smooth animated progress bar colour-shifts from blue → green → purple as motion intensity increases
 - **Motion badge** — IDLE / DETECTING MOTION status with a pulsing indicator dot
 
 ### 🖼 Gallery Screen (Imaze)
+
 - **Gyroscope parallax** — the featured photo shifts ±40 px in any direction as you tilt the device, using a low-pass accumulator to prevent drift
 - **Smooth entrance animation** — content springs in from below on mount
 - **Thumbnail strip** — horizontally scrollable snap-list; tap a thumb to jump to any photo
 - **Dot indicator** — pill-expanding active dot synced to the scroll position
 
 ### 🃏 Friction Gallery Screen
+
 - **Stacked card deck** — five photos layered at different scales, rotations and z-indices
 - **Per-card friction** — each card has its own `friction` coefficient; tilting the device fans the deck into an arc, back cards moving the most
 - **Staggered entrance** — cards spring in from the bottom with incremental offsets for a cascading reveal
@@ -36,21 +39,21 @@
 
 ## 🛠 Tech Stack
 
-| Layer | Choice |
-|---|---|
-| Framework | React Native 0.81 + Expo SDK 54 |
-| Language | TypeScript (`.tsx`) |
-| Sensors | `expo-sensors` — `Gyroscope` |
-| Navigation | `@react-navigation/native-stack` |
-| Animation | `Animated` API — native driver throughout |
-| Status Bar | `expo-status-bar` |
+| Layer      | Choice                                    |
+| ---------- | ----------------------------------------- |
+| Framework  | React Native 0.81 + Expo SDK 54           |
+| Language   | TypeScript (`.tsx`)                       |
+| Sensors    | `expo-sensors` — `Gyroscope`              |
+| Navigation | `@react-navigation/native-stack`          |
+| Animation  | `Animated` API — native driver throughout |
+| Status Bar | `expo-status-bar`                         |
 
 ---
 
 ## 📐 Architecture
 
 ```
-my-app/
+rn-sensors/
 ├── App.tsx                      # Root navigator (typed RootStackParamList)
 ├── index.js                     # Expo entry point
 ├── screens/
@@ -68,8 +71,8 @@ All three screens share the same pattern for zero-drift, high-performance gyro r
 
 ```ts
 // Low-pass accumulator — decays toward zero when the phone is still
-accX.current = accX.current * 0.80 + g.y * 2.8;
-accY.current = accY.current * 0.80 + g.x * 2.8;
+accX.current = accX.current * 0.8 + g.y * 2.8;
+accY.current = accY.current * 0.8 + g.x * 2.8;
 
 // Direct Animated.Value mutation — no React re-render, no JS→Native bridge overhead
 animatedValue.setValue(accX.current);
@@ -94,7 +97,7 @@ animatedValue.setValue(accX.current);
 
 ```bash
 git clone https://github.com/your-username/rn-sensors.git
-cd rn-sensors/my-app
+cd rn-sensors
 npm install
 ```
 
@@ -127,11 +130,11 @@ GyroscopeScreen  ──[Open Imaze Gallery]──▶  ImazeScreen  ──[Explor
 
 ## 🎛 Gyroscope Constants
 
-| Constant | File | Purpose |
-|---|---|---|
-| `FRICTION = { outer: 1.8, mid: 1.0, inner: 0.4, dot: 0.1 }` | `GyroscopeScreen.tsx` | Per-ring displacement multiplier |
-| `PARALLAX_EXTRA = 40` | `ImazeScreen.tsx` | Max image bleed in px for parallax |
-| `CARDS[i].friction` | `FrictionScreen.tsx` | Per-card tilt amplification |
+| Constant                                                    | File                  | Purpose                            |
+| ----------------------------------------------------------- | --------------------- | ---------------------------------- |
+| `FRICTION = { outer: 1.8, mid: 1.0, inner: 0.4, dot: 0.1 }` | `GyroscopeScreen.tsx` | Per-ring displacement multiplier   |
+| `PARALLAX_EXTRA = 40`                                       | `ImazeScreen.tsx`     | Max image bleed in px for parallax |
+| `CARDS[i].friction`                                         | `FrictionScreen.tsx`  | Per-card tilt amplification        |
 
 ---
 
